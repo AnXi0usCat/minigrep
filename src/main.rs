@@ -3,20 +3,27 @@ use std::fs;
 
 fn main() {
     let args = env::args().skip(1).collect::<Vec<String>>();
-    let (query,  filename) =  parse_config(&args);
+    let config =  Config::new(&args);
 
-    println!("Searching for: {}", query);
-    println!("In the file: {}", filename);
+    println!("Searching for: {}", config.query);
+    println!("In the file: {}", config.filename);
 
-    let text = fs::read_to_string(filename)
+    let text = fs::read_to_string(config.filename)
         .expect("Something went wrong reading the file");
 
     println!("With text:\n{}", text)
 }
 
-fn parse_config(args: &[String]) -> (&str, &str) {
-    let query = &args[0];
-    let filename = &args[1];
+struct Config {
+    query: String,
+    filename: String
+}
 
-    (query, filename)
+impl Config {
+    fn new(args: &[String]) -> Self {
+        let query = args[0].clone();
+        let filename = args[1].clone();
+
+        Config { query, filename }
+    }
 }
