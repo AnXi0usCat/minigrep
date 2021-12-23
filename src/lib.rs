@@ -26,7 +26,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn search<'a>(query: & str, text: &'a str) -> Vec<&'a str> {
+fn search<'a>(query: & str, text: &'a str) -> Vec<&'a str> {
     let mut result = vec![];
     for line in text.lines() {
         if line.contains(query) {
